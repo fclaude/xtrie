@@ -17,7 +17,6 @@ map<string,uint> ids;
 map<uint,string> rids;
 uint maxTag = 0;
 uint maxNode = 0;
-uint * mapping;
 Trie * index;
 
 uint * parse(string s, uint * len) {
@@ -139,15 +138,7 @@ int main(int argc, char ** argv) {
   }
   input.close();
 
-  ifstream input2((basename+".map").c_str(),ios::binary);
-  assert(input2.good());
-  input2.read((char*)&maxNode,sizeof(uint));
-  mapping = new uint[maxNode];
-  input2.read((char*)mapping,maxNode*sizeof(uint));
-  input2.close();
-
   answerQueries();
   delete index;
-  delete [] mapping;
 }
 
