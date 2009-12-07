@@ -14,12 +14,14 @@ all:
 	@make --no-print-directory -C libcds
 	@echo " [C++] Compiling gen_xml.cpp"
 	@gcc -w -c gen_xml.c
+	@echo " [C++] Compiling NaiveTrie.cpp"
+	@$(CPP) $(CPPFLAGS2) $(LCDSFLAGS) -c NaiveTrie.cpp
 	@echo " [C++] Compiling parser.cpp"
 	@$(CPP) $(CPPFLAGS2) $(LXMLFLAGS) $(LCDSFLAGS) -c parser.cpp
 	@echo " [C++] Compiling gen_xml.c"
 	@gcc -w -c gen_xml.c 
 	@echo " [C++] Building parser"
-	@$(CPP) $(CPPFLAGS2) $(LXMLFLAGS) $(LCDSFLAGS) -o parser parser.o
+	@$(CPP) $(CPPFLAGS2) $(LXMLFLAGS) $(LCDSFLAGS) -o parser parser.o NaiveTrie.o
 	@echo " [C++] Building gen_xml"
 	@gcc -o gen_xml gen_xml.o
 
