@@ -1,4 +1,8 @@
 
+/** XTrie definition
+ * @author Francisco Claude <fclaude@cs.uwaterloo.ca>
+ */
+
 #ifndef _TRIE
 #define _TRIE
 

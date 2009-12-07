@@ -1,4 +1,4 @@
-/** Simple engine for testint eh xbw implementation
+/** Simple engine for testing the xtrie implementation
  * @author Francisco Claude
  */
 #include <iostream>

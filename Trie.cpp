@@ -1,4 +1,8 @@
 
+/** XTrie implementation
+ * @author Francisco Claude <fclaude@cs.uwaterloo.ca>
+ */
+
 #include <basics.h>
 
 #include "Trie.h"

@@ -1,5 +1,8 @@
 
-/** Parser based on the libxml++ example */
+/** Parser based on the libxml++ example 
+ * Builds the XTrie 
+ * @author Francisco Claude
+ */
 
 #include <libxml++/libxml++.h>
 #include <iostream>

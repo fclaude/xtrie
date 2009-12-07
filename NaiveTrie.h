@@ -1,4 +1,8 @@
 
+/** NaiveTrie definition
+ * @author Francisco Claude <fclaude@cs.uwaterloo.ca>
+ */
+
 #ifndef _NAIVE_TRIE
 #define _NAIVE_TRIE
 
