@@ -14,7 +14,7 @@ libxml++2.6, for installing it in ubuntu do:
 Example of use:
 
 $ ./gen_xml -f 1 > test.xml
-$ ./parser text.xml index
+$ ./parser test.xml index
 $ ./engine index
 > help
 
@@ -27,11 +27,11 @@ $ ./engine index
 
 > //keyword
 
-  (results: 69969 | time: 2.36763ms | index size: 5493Kb)
+  (results: 69969 | time: 2.35764ms | index size: 5437Kb)
 
 > size
 
-  Index size: 5493.71Kb
+  Index size: 5437.84Kb
 
 > quit
 
