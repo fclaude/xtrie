@@ -127,13 +127,13 @@
       /** Returns the size of the array in bytes
        */
       inline size_t getSize() {
-        return sizeof(uint)*uintLength;
+        return sizeof(uint)*uintLength+sizeof(this);
       }
 
       /** Returns the length of the array
        */
       inline size_t getLength() {
-        return length+sizeof(this);
+        return length;
       }
 
       inline uint getMax() {

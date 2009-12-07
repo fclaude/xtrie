@@ -276,17 +276,20 @@ int main(int argc, char* argv[])
     for(uint i=0;i<nodes.size();i++)
       delete nodes[i];
 
+    cout << "Building Trie." << endl;
+    Trie t(&trie);
+    cout << "Saving files." << endl;
+    ofstream out((fileout+".index").c_str(),ios::binary);
+    t.save(out);
+    out.close();
+    saveDictionary(fileout+".dict");
+    saveMapping(fileout+".map");
+
 
   } catch(const std::exception& ex) {
     cout.flush();
     cout << "Exception caught: " << ex.what() << std::endl;
   }
-
-  cout << "Building Trie." << endl;
-  ofstream out((fileout+".index").c_str(),ios::binary);
-  Trie t(&trie);
-  t.save(out);
-  out.close();
 
   return 0;
 }

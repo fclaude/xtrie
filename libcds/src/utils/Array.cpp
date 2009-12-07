@@ -27,8 +27,10 @@
     input.read((char*)&maxValue,sizeof(uint));
     input.read((char*)&bitsPerItem,sizeof(uint));
     input.read((char*)&uintLength,sizeof(uint));
-    data = new uint[uintLength];
-    input.read((char*)data,sizeof(uint)*uintLength);
+    if(uintLength!=0) {
+      data = new uint[uintLength];
+      input.read((char*)data,sizeof(uint)*uintLength);
+    }
   }
 
   Array::Array(const vector<uint> & A, uint bpe) {
@@ -109,7 +111,8 @@
   }
 
   Array::~Array() {
-    delete [] data;
+    if(uintLength>0)
+      delete [] data;
   }
 
   void Array::save(ofstream & out) const {
@@ -118,14 +121,17 @@
     out.write((char*)&maxValue,sizeof(uint));
     out.write((char*)&bitsPerItem,sizeof(uint));
     out.write((char*)&uintLength,sizeof(uint));
-    out.write((char*)data,sizeof(uint)*uintLength);
+    if(uintLength!=0)
+      out.write((char*)data,sizeof(uint)*uintLength);
   }
 
   void Array::initData() {
     bitsPerItem = bits(maxValue);
     uintLength = uint_len(length,bitsPerItem);
-    data = new uint[uintLength];
-    for(size_t i=0;i<uintLength;i++)
-      data[i] = 0;
+    if(uintLength!=0) {
+      data = new uint[uintLength];
+      for(size_t i=0;i<uintLength;i++)
+        data[i] = 0;
+    }
   }
 

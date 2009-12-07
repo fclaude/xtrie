@@ -8,18 +8,16 @@ using namespace std;
 size_t Trie::pos = 0;
 
 Trie::Trie(NaiveTrie * nt) {
-  subTreeSize = (uint)-1;
-  values = new Array(nt->values);
-  vector<uint> values;
-  vector<NaiveTrie *> pointers;
-  for(map<uint,NaiveTrie*>::iterator iter=(nt->ptrs).begin(); iter!=(nt->ptrs).end(); ++iter) {
-    values.push_back(iter->first);
-    pointers.push_back(iter->second);
-  }
-  this->values = new Array(values);
-  ptrs = new Trie*[values.size()];
-  for(size_t i=0; i<values.size(); i++)
-    ptrs[i] = new Trie(pointers[i]);
+  subTreeSize = (size_t)-1;
+  this->values = new Array(nt->values);
+  vector<uint> labs;
+  for(map<uint,NaiveTrie*>::iterator iter=(nt->ptrs).begin(); iter!=(nt->ptrs).end(); ++iter)
+    labs.push_back(iter->first);
+  this->labels = new Array(labs);
+  ptrs = new Trie*[labs.size()];
+  for(size_t i=0; i<labs.size(); i++)
+    ptrs[i] = new Trie(nt->ptrs[labs[i]]);
+  subTreeSize = getSubTreeSize();
 }
 
 Trie::~Trie() {
@@ -32,10 +30,15 @@ Trie::~Trie() {
 
 uint * Trie::getValues(uint * path, uint len, uint * rlen) const {
   Trie * node = (Trie*)this; // We know its going to respect the const
-  for(uint i=0;i<len;i++) {
-    size_t branch = getBranch(path[i]);
-    if(path[i]==labels->getField(branch)) {
-      node = node->ptrs[branch];
+  for(uint i=len-1;i+1!=0;i--) {
+    if(node->labels->getLength()>0) {
+      size_t branch = node->getBranch(path[i]);
+      if(path[i]==node->labels->getField(branch)) {
+        node = node->ptrs[branch];
+      } else {
+        *rlen = 0;
+        return NULL;
+      }
     } else {
       *rlen = 0;
       return NULL;
@@ -59,10 +62,11 @@ size_t Trie::getBranch(uint v) const {
       fin = med;
     }
   }
-  return labels->getField(fin);
+  return fin;
 }
 
 size_t Trie::getSubTreeSize() const {
+  if(subTreeSize!=(size_t)-1) return subTreeSize;
   size_t ret = values->getLength();
   for(size_t i=0;i<labels->getLength();i++)
     ret += ptrs[i]->getSubTreeSize();
@@ -86,9 +90,11 @@ void Trie::save(ofstream & out) const {
   assert(out.good());
   labels->save(out);
   values->save(out);
-  out.write((char*)subTreeSize,sizeof(size_t));
+  out.write((char*)&subTreeSize,sizeof(size_t));
+  //cout << "Entering Array.save()" << endl; cout.flush();
   for(size_t i=0;i<labels->getLength();i++)
     ptrs[i]->save(out);
+  //cout << "Leaving Array.save()" << endl; cout.flush();
 }
 
 Trie::Trie(ifstream & in) {
