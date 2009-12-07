@@ -107,7 +107,7 @@ void answerQueries() {
       res = index->getValues(qry,len,&lres);
       double time = 1000.*stop_clock()/(REP+1);
       //cout << "  Results for " << s << endl;
-      cout << "  (results: " << lres << " | time: " << time << "ms | index size: " << index->getSize()/1024 << "Kb)" << endl;
+      cout << "  (results: " << lres << " | time: " << time << "ms | index size: " << index->getSize()/1024.0 << "Kb)" << endl;
       delete [] qry;
     }
     cout << endl;
