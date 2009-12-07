@@ -76,6 +76,8 @@ size_t Trie::getSubTreeSize() const {
 size_t Trie::getSize() const {
   size_t ret = labels->getSize() + values->getSize();
   ret += sizeof(Trie*)*labels->getLength() + sizeof(Trie);
+  for(size_t i=0; i<labels->getLength(); i++)
+    ret += ptrs[i]->getSize();
   return ret;
 }
 

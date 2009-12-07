@@ -69,7 +69,7 @@ double stop_clock() {
 }
 /* end Time meassuring */
 
-#define REP 100
+#define REP 1000
 
 void answerQueries() {
   while(!cin.eof()) {
