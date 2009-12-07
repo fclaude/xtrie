@@ -22,7 +22,7 @@ class tnode {
     int id;
     tnode * parent;
 
-    tnode(int _id, tnode * _parent, ) :id(_id),parent(_parent) {
+    tnode(int _id, tnode * _parent) :id(_id),parent(_parent) {
         nr = ++act_nr; 
     }
 
@@ -129,7 +129,6 @@ tnode* process_node(const xmlpp::Node* node, tnode * parent) {
     xmlpp::Node::NodeList list = node->get_children();
     xmlpp::Node::NodeList::iterator iter = list.begin();
     for(; iter != list.end(); ++iter) {
-      tnode * ret;
       process_node(*iter, act_node);
     }
   }
@@ -141,8 +140,7 @@ vector<uint> parse(string s) {
   vector<uint> res;
   if(s.find("//")!=0) {
     cout << "  ** Incorrect query" << endl;
-    *len = 0;
-    return NULL;
+    return res;
   }
   s = s.substr(2);
   size_t pos = s.find("/");
@@ -150,8 +148,7 @@ vector<uint> parse(string s) {
     uint id = ids[s.substr(0,pos)];
     if(id==0) {
       cout << "  ** Node " << s.substr(0,pos) << " is not part of the document" << endl;
-      *len = 0;
-      return NULL;
+      return res;
     }
     res.push_back(id);
     s = s.substr(pos+1);
@@ -160,8 +157,7 @@ vector<uint> parse(string s) {
   uint id = ids[s];
   if(id==0) {
     cout << "  ** Node " << s.substr(0,pos) << " is not part of the document" << endl;
-    *len = 0;
-    return NULL;
+    return res;
   }
   res.push_back(id);
   return res;
@@ -192,7 +188,7 @@ void answerQueries(NaiveTrie & trie) {
     if(s.length()==0) break;
     if(s=="exit" || s=="quit") break;
     if(s=="size") {
-      cout << "  Index size: " << index->size()/1024.0 << "Kb" << endl;
+      cout << "  Index size: NA Kb" << endl;
       cout << endl;
       continue;
     }
@@ -206,19 +202,18 @@ void answerQueries(NaiveTrie & trie) {
       cout << endl;
       continue;
     }
-    uint len, lres;
-    vector<uint> qry = parse(s,&len);
+    vector<uint> qry = parse(s);
+    uint len=qry.size();
     vector<uint> res;
     if(len>0) {
       start_clock();
       for(uint k=0;k<REP;k++) {
-        res = index->getValues(qry);
+        res = trie.getValues(qry);
       }
-      res = index->getValues(qry);
+      res = trie.getValues(qry);
       double time = 1000.*stop_clock()/(REP+1);
       //cout << "  Results for " << s << endl;
       cout << "  (results: " << res.size() << " | time: " << time << "ms)" << endl;
-      delete [] qry;
     }
     cout << endl;
   }

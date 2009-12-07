@@ -11,10 +11,13 @@ NaiveTrie::NaiveTrie() {
   cout << "Nr of nodes" << ++nr_nodes << endl;
 }
 
-NaiveTrie::~NaiveTrie() {}
+NaiveTrie::~NaiveTrie() {
+  for(map<uint,NaiveTrie*>::iterator iter=ptrs.begin(); iter!=ptrs.end(); ++iter) 
+    delete iter->second;
+}
 
 void NaiveTrie::insertPath(const vector<uint> path, const uint value) {
-  NaiveTrie * node = &this;
+  NaiveTrie * node = this;
   for(uint i=0;i<path.size();i++) {
     if(node->ptrs[path[i]] == NULL)
       node->ptrs[path[i]] = new NaiveTrie();
@@ -25,7 +28,7 @@ void NaiveTrie::insertPath(const vector<uint> path, const uint value) {
 
 vector<uint> NaiveTrie::getValues(vector<uint> path) const {
   vector<uint> ret;
-  NaiveTrie * node = &this;
+  NaiveTrie * node = (NaiveTrie*)this; // We know its going to respect the const
   for(uint i=0;i<path.size();i++) {
     if(node->ptrs[path[i]] == NULL)
       node->ptrs[path[i]] = new NaiveTrie();
@@ -35,10 +38,10 @@ vector<uint> NaiveTrie::getValues(vector<uint> path) const {
   return ret;
 }
 
-void NaiveTrie::getSubTreeValues(vector<uint> & res) const {
+void NaiveTrie::getSubTreeValues(vector<uint> & res) {
   res.insert(res.end(), values.begin(), values.end());
   for(map<uint,NaiveTrie*>::iterator iter=ptrs.begin(); iter!=ptrs.end(); ++iter) {
-    (*iter)->getSubTreeValues(ret);
+    iter->second->getSubTreeValues(res);
   }
 }
 

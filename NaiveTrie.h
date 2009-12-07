@@ -14,13 +14,14 @@ class NaiveTrie {
   map<uint, NaiveTrie*> ptrs;
   vector<uint> values;
 
-  NaiveTrie();
-  ~NaiveTrie();
+  public:
+    NaiveTrie();
+    ~NaiveTrie();
 
-  void insertPath(const vector<uint> path, const uint value);
-  vector<uint> getValues(vector<uint> path) const;
-  void getSubTreeValues(vector<uint> & ret) const;
-  void save(ofstream & out) const;
+    void insertPath(const vector<uint> path, const uint value);
+    vector<uint> getValues(vector<uint> path) const;
+    void getSubTreeValues(vector<uint> & ret);
+    void save(ofstream & out) const;
 };
 
 #endif
