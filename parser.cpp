@@ -160,7 +160,9 @@ vector<uint> parse(string s) {
     return res;
   }
   res.push_back(id);
-  return res;
+  vector<uint> ret;
+  ret.insert(ret.end(),res.rbegin(),res.rend());
+  return ret;
 }
 
 /* Time meassuring */
@@ -188,7 +190,7 @@ void answerQueries(NaiveTrie & trie) {
     if(s.length()==0) break;
     if(s=="exit" || s=="quit") break;
     if(s=="size") {
-      cout << "  Index size: NA Kb" << endl;
+      cout << "  Index size: " << trie.getSize()*sizeof(uint)/1024 << "Kb" << endl;
       cout << endl;
       continue;
     }
@@ -213,7 +215,7 @@ void answerQueries(NaiveTrie & trie) {
       res = trie.getValues(qry);
       double time = 1000.*stop_clock()/(REP+1);
       //cout << "  Results for " << s << endl;
-      cout << "  (results: " << res.size() << " | time: " << time << "ms)" << endl;
+      cout << "  (results: " << res.size() << " | time: " << time << "ms | size: " << sizeof(uint)*trie.getSize()/1024 << "Kb)" << endl;
     }
     cout << endl;
   }
@@ -230,27 +232,31 @@ int main(int argc, char* argv[])
     return 0;
   }
   
+  NaiveTrie trie;
+
   try {
     {
-      xmlpp::DomParser parser;
+      xmlpp::DomParser *parser;
+      parser = new xmlpp::DomParser;
       //parser.set_validate();
       //parser.set_substitute_entities(); 
       cout << "Parsing file." << endl;
-      parser.parse_file(filepath);
-      if(parser) {
-        const xmlpp::Node* pNode = parser.get_document()->get_root_node(); 
+      parser->parse_file(filepath);
+      if(*parser) {
+        const xmlpp::Node* pNode = parser->get_document()->get_root_node(); 
         cout << "Generating the tree." << endl;
         process_node(pNode, NULL);
       }
+      delete parser;
     }
 
-    cout << "Saving Dictionary" << endl;
-    saveDictionary(fileout+".dict");
+    //cout << "Saving Dictionary" << endl;
+    //saveDictionary(fileout+".dict");
 
-    cout << "Saving Mapping" << endl;
-    saveMapping(fileout+".map");
+    //cout << "Saving Mapping" << endl;
+    //saveMapping(fileout+".map");
 
-    NaiveTrie trie;
+    cout << "Building Trie." << endl;
     for(uint i=0;i<nodes.size();i++) {
       vector<uint> path;
       uint id = nodes[i]->nr;
@@ -261,16 +267,21 @@ int main(int argc, char* argv[])
       }
       trie.insertPath(path,id);
     }
-
-    answerQueries(trie);
+    {
+      extern uint nr_nodes;
+      cout << "Number of nodes in the trie: " << nr_nodes << endl;
+    }
 
     for(uint i=0;i<nodes.size();i++)
       delete nodes[i];
+
 
   } catch(const std::exception& ex) {
     cout.flush();
     cout << "Exception caught: " << ex.what() << std::endl;
   }
+
+  answerQueries(trie);
 
   return 0;
 }

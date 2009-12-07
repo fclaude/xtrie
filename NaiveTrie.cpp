@@ -3,12 +3,13 @@
 
 #include "NaiveTrie.h"
 
-static int nr_nodes = 0;
+int nr_nodes = 0;
 
 using namespace std;
 
 NaiveTrie::NaiveTrie() {
-  cout << "Nr of nodes" << ++nr_nodes << endl;
+  //cout << "Nr of nodes" << ++nr_nodes << endl;
+  ++nr_nodes;
 }
 
 NaiveTrie::~NaiveTrie() {
@@ -19,7 +20,7 @@ NaiveTrie::~NaiveTrie() {
 void NaiveTrie::insertPath(const vector<uint> path, const uint value) {
   NaiveTrie * node = this;
   for(uint i=0;i<path.size();i++) {
-    if(node->ptrs[path[i]] == NULL)
+    if(node->ptrs[path[i]] == NULL) 
       node->ptrs[path[i]] = new NaiveTrie();
     node = node->ptrs[path[i]];
   }
@@ -49,4 +50,13 @@ void NaiveTrie::save(ofstream & out) const {
   
 }
 
+uint NaiveTrie::getSize() {
+  uint integers = 0;
+  for(map<uint,NaiveTrie*>::iterator iter=ptrs.begin(); iter!=ptrs.end(); ++iter) {
+    integers += iter->second->getSize();
+    integers += 4;
+  }
+  integers += values.size();
+  return integers;
+}
 

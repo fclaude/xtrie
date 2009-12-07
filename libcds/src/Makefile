@@ -18,7 +18,7 @@ STATIC_SEQUENCE_DIR=static_sequence
 STATIC_SEQUENCE_OBJECTS=$(STATIC_SEQUENCE_DIR)/static_sequence.o $(STATIC_SEQUENCE_DIR)/static_sequence_wvtree.o $(STATIC_SEQUENCE_DIR)/wt_coder_binary.o $(STATIC_SEQUENCE_DIR)/wt_coder_huff.o $(STATIC_SEQUENCE_DIR)/wt_node_internal.o $(STATIC_SEQUENCE_DIR)/wt_node_leaf.o $(STATIC_SEQUENCE_DIR)/wt_coder.o $(STATIC_SEQUENCE_DIR)/wt_node.o $(STATIC_SEQUENCE_DIR)/static_sequence_gmr_chunk.o  $(STATIC_SEQUENCE_DIR)/static_sequence_builder_gmr_chunk.o  $(STATIC_SEQUENCE_DIR)/static_sequence_gmr.o $(STATIC_SEQUENCE_DIR)/static_sequence_builder_wvtree.o $(STATIC_SEQUENCE_DIR)/static_sequence_builder_gmr.o $(STATIC_SEQUENCE_DIR)/static_sequence_wvtree_noptrs.o $(STATIC_SEQUENCE_DIR)/static_sequence_builder_wvtree_noptrs.o $(STATIC_SEQUENCE_DIR)/static_sequence_bs.o
 
 UTILS_DIR=utils
-UTILS_OBJECTS=$(UTILS_DIR)/alphabet_mapper_none.o $(UTILS_DIR)/alphabet_mapper.o $(UTILS_DIR)/alphabet_mapper_cont.o
+UTILS_OBJECTS=$(UTILS_DIR)/alphabet_mapper_none.o $(UTILS_DIR)/alphabet_mapper.o $(UTILS_DIR)/alphabet_mapper_cont.o $(UTILS_DIR)/Array.o
 
 %.o: %.cpp
 	@echo " [C++] Compiling $<"
