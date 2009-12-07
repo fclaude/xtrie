@@ -5,26 +5,33 @@
 #include <map>
 #include <vector>
 #include <fstream>
+#include <iostream>
 
 #include <basics.h>
+#include <Array.h>
+
+#include "NaiveTrie.h"
 
 using namespace std;
 
 class Trie {
   Array * labels;
-  Trie * ptrs;
-  uint subTreeSize;
+  Trie ** ptrs;
+  size_t subTreeSize;
   Array * values;
 
-  static int pos;
+  static size_t pos;
+
+  size_t getBranch(uint v) const;
+  size_t getSubTreeSize() const;
+  void fillValues(uint * buff) const;
 
   public:
     Trie(ifstream & in);
     Trie(NaiveTrie * node);
     ~Trie();
 
-    Array * getValues(uint * path, uint len) const;
-    void getSubTreeValues();
+    uint * getValues(uint * path, uint len, uint * rlen) const;
     void save(ofstream & out) const;
     uint getSize() const;
 };

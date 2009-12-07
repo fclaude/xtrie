@@ -22,6 +22,8 @@ class NaiveTrie {
     vector<uint> getValues(vector<uint> path) const;
     void getSubTreeValues(vector<uint> & ret);
     void save(ofstream & out) const;
+    size_t getSize();
+    friend class Trie;
 };
 
 #endif

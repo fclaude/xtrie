@@ -11,6 +11,7 @@
 
 #include <basics.h>
 #include "NaiveTrie.h"
+#include "Trie.h"
 
 using namespace std;
 
@@ -256,7 +257,7 @@ int main(int argc, char* argv[])
     //cout << "Saving Mapping" << endl;
     //saveMapping(fileout+".map");
 
-    cout << "Building Trie." << endl;
+    cout << "Building NaiveTrie." << endl;
     for(uint i=0;i<nodes.size();i++) {
       vector<uint> path;
       uint id = nodes[i]->nr;
@@ -281,7 +282,11 @@ int main(int argc, char* argv[])
     cout << "Exception caught: " << ex.what() << std::endl;
   }
 
-  answerQueries(trie);
+  cout << "Building Trie." << endl;
+  ofstream out((fileout+".index").c_str(),ios::binary);
+  Trie t(&trie);
+  t.save(out);
+  out.close();
 
   return 0;
 }

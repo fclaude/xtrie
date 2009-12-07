@@ -50,9 +50,10 @@ void NaiveTrie::save(ofstream & out) const {
   
 }
 
-uint NaiveTrie::getSize() {
-  uint integers = 0;
-  for(map<uint,NaiveTrie*>::iterator iter=ptrs.begin(); iter!=ptrs.end(); ++iter) {
+size_t NaiveTrie::getSize() {
+  size_t integers = 0;
+  map<uint,NaiveTrie*>::iterator iter=ptrs.begin();
+  for(; iter!=ptrs.end(); ++iter) {
     integers += iter->second->getSize();
     integers += 4;
   }
