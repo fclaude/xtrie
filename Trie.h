@@ -18,6 +18,7 @@
 
 using namespace std;
 
+
 class Trie {
   Array * labels;
   Trie ** ptrs;
@@ -38,6 +39,9 @@ class Trie {
     uint * getValues(uint * path, uint len, uint * rlen) const;
     void save(ofstream & out) const;
     uint getSize() const;
+    uint getSizePointers() const;
+    uint getSizeIds() const;
+    uint getSizeLabels() const;
 };
 
 #endif

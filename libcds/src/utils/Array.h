@@ -127,7 +127,7 @@
       /** Returns the size of the array in bytes
        */
       inline size_t getSize() {
-        return sizeof(uint)*uintLength+sizeof(this);
+        return sizeof(uint)*uintLength+sizeof(Array);
       }
 
       /** Returns the length of the array

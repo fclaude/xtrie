@@ -63,7 +63,7 @@ class MySaxParser : public SaxParser {
     vector<uint> path;
 
   public:
-    MySaxParser() {}
+    MySaxParser() : SaxParser() {}
     virtual ~MySaxParser() {}
 
   protected:
@@ -114,6 +114,8 @@ int main(int argc, char* argv[])
     ifstream xmlFile(filepath.c_str());
     char buffer[1024*1024*8];
     MySaxParser parser;
+    parser.set_substitute_entities(false);
+    parser.set_validate(false);
 
     do {
       xmlFile.read(buffer,63);

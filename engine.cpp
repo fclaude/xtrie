@@ -18,6 +18,7 @@ map<uint,string> rids;
 uint maxTag = 0;
 uint maxNode = 0;
 Trie * index;
+extern uint sizeIds;
 
 uint * parse(string s, uint * len) {
   vector<uint> res;
@@ -79,7 +80,11 @@ void answerQueries() {
     if(s.length()==0) break;
     if(s=="exit" || s=="quit") break;
     if(s=="size") {
-      cout << "  Index size: " << index->getSize()/1024.0 << "Kb" << endl;
+      cout << "  Index size     : " << index->getSize()/1024.0 << "Kb" << endl;
+      cout << "  Ids size       : " << index->getSizeIds()/1024.0 << "Kb" << endl;
+      cout << "  Labels size    : " << index->getSizeLabels()/1024.0 << "Kb" << endl;
+      cout << "  Pointers size  : " << index->getSizePointers()/1024.0 << "Kb" << endl;
+      cout << "  Nr of nodes    : " << sizeIds << endl;
       cout << endl;
       continue;
     }

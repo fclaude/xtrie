@@ -10,8 +10,10 @@
 using namespace std;
 
 size_t Trie::pos = 0;
+uint sizeIds = 0;
 
 Trie::Trie(NaiveTrie * nt) {
+  sizeIds++;
   subTreeSize = (size_t)-1;
   this->values = new Array(nt->values);
   vector<uint> labs;
@@ -78,10 +80,32 @@ size_t Trie::getSubTreeSize() const {
 }
 
 size_t Trie::getSize() const {
-  size_t ret = labels->getSize() + values->getSize();
+  size_t ret = labels->getSize();
   ret += sizeof(Trie*)*labels->getLength() + sizeof(Trie);
   for(size_t i=0; i<labels->getLength(); i++)
     ret += ptrs[i]->getSize();
+  return ret + values->getSize();
+}
+
+size_t Trie::getSizeLabels() const {
+  size_t ret = labels->getSize();
+  for(size_t i=0; i<labels->getLength(); i++)
+    ret += ptrs[i]->getSizeLabels();
+  return ret;
+}
+
+size_t Trie::getSizeIds() const {
+  size_t ret = values->getSize();
+  for(size_t i=0; i<labels->getLength(); i++)
+    ret += ptrs[i]->getSizeIds();
+  return ret;
+}
+
+size_t Trie::getSizePointers() const {
+  uint ret = 0;
+  ret += sizeof(Trie*)*labels->getLength() + sizeof(Trie);
+  for(size_t i=0; i<labels->getLength(); i++)
+    ret += ptrs[i]->getSizePointers();
   return ret;
 }
 
@@ -104,6 +128,7 @@ void Trie::save(ofstream & out) const {
 }
 
 Trie::Trie(ifstream & in) {
+  sizeIds++;
   assert(in.good());
   labels = new Array(in);
   values = new Array(in);
