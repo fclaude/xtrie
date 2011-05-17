@@ -84,7 +84,7 @@
        * @param n length (in elements) of the array
        * @param _maxValue maximum value that could be stored in the array
        */
-      Array(uint n, uint _maxValue);
+      Array(size_t n, uint _maxValue);
 
       /** Destroys the array */
       ~Array();

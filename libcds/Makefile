@@ -9,7 +9,7 @@ doc:
 libcompact: 
 	@echo " [MSG] Entering directory src"
 	@make --no-print-directory -C src
-	
+
 tests: libcompact
 	@echo " [MSG] Entering directory tests"
 	@make --no-print-directory -C tests

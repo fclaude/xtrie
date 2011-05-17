@@ -38,10 +38,10 @@ class Trie {
 
     uint * getValues(uint * path, uint len, uint * rlen) const;
     void save(ofstream & out) const;
-    uint getSize() const;
-    uint getSizePointers() const;
-    uint getSizeIds() const;
-    uint getSizeLabels() const;
+    size_t getSize() const;
+    size_t getSizePointers() const;
+    size_t getSizeIds() const;
+    size_t getSizeLabels() const;
 };
 
 #endif
